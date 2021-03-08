@@ -12,6 +12,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.text1.text = "Binding Test"
+        binding.text1.text = "Remote Github test"
     }
 }
