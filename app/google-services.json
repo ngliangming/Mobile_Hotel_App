@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "306805006456",
+    "project_id": "hotel-app-2008940",
+    "storage_bucket": "hotel-app-2008940.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306805006456:android:0c01d6ca2cb9ba16494d8d",
+        "android_client_info": {
+          "package_name": "com.nlm.mobilehotelappassignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306805006456-q0f4me8e1d3sq2jve6v237cjf0ou44fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5M_yG_qodFnRf0rHgOqhy8jweELXo9Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306805006456-q0f4me8e1d3sq2jve6v237cjf0ou44fs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
