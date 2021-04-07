@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,7 +17,7 @@ import com.nlm.mobilehotelappassignment.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +27,12 @@ class MainActivity : AppCompatActivity() {
 
         //Try to load user & login with shared pref
         loadUser()
+
+        binding.loginButton.setOnClickListener { loginBtn() }
+        binding.signupButton.setOnClickListener { testFire() }
     }
 
-    fun testFire(view: View) {
+    private fun testFire() {
         val tag = "Firestore Out"
 
         val level = 0
@@ -70,12 +72,12 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun loginBtn(view: View) {
+    private fun loginBtn() {
         val emailInput = binding.emailInput.text.toString()
         val passwordInput = binding.passwordInput.text.toString()
 
-        val tag = "login";
-        var loginStatus = false;
+        val tag = "login"
+        var loginStatus = false
 
         toggleUi(false)
         db.collection("users")
@@ -94,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                     )
 
                     if (document.data.getValue("password") == passwordInput) {
-                        loginStatus = true;
+                        loginStatus = true
 
                         saveUser(name, password, email, adminLevel)
                         login(name, adminLevel)
@@ -163,8 +165,8 @@ class MainActivity : AppCompatActivity() {
         val password = sharedPreferences.getString("password", null)
         val adminLevel = sharedPreferences.getInt("adminLevel", -1)
 
-        val tag = "login";
-        var loginStatus = false;
+        val tag = "login"
+        var loginStatus = false
 
         if (email != null && password != null) {
             db.collection("users")
@@ -180,7 +182,7 @@ class MainActivity : AppCompatActivity() {
                         )
 
                         if (document.data.getValue("password") == password) {
-                            loginStatus = true;
+                            loginStatus = true
 
                             login(name, adminLevel)
                         }
@@ -205,12 +207,12 @@ class MainActivity : AppCompatActivity() {
 
                     toggleUi(true)
                 }
-        }else {
+        } else {
             toggleUi(true)
         }
     }
 
-    fun clearData() {
+    private fun clearData() {
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
@@ -241,7 +243,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    val startForResult =
+    private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode != Activity.RESULT_OK) {
                 finish()
