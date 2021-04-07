@@ -1,8 +1,11 @@
 package com.nlm.mobilehotelappassignment
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.nlm.mobilehotelappassignment.databinding.ActivityCustomerHomeBinding
 
@@ -14,7 +17,13 @@ class customerHome : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        setContentView(R.layout.activity_customer_home)
+
+        val name = intent.getStringExtra("name").toString()
+        val adminLevel = intent.getIntExtra("adminLevel", -1)
+
+        val text = "$name, user level $adminLevel"
+        val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
+        toast.show()
     }
 
     fun logout(view: View) {
@@ -23,6 +32,5 @@ class customerHome : AppCompatActivity() {
         returnIntent.putExtra("result", result)
         setResult(RESULT_OK, returnIntent)
         finish()
-
     }
 }

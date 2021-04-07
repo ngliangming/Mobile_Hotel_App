@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:backgroundTint="@color/primary_white"
-        android:onClick="login"
+        android:onClick="loginBtn"
         android:text="Login"
         android:textColor="@color/primary_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/primary_white"
-        android:onClick="signup"
+        android:onClick="testFire"
         android:text="Signup"
         android:textColor="@color/primary_text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -88,5 +88,15 @@
         app:layout_constraintVertical_bias="0.039"
         app:strokeColor="@color/primary_black"
         app:strokeWidth="1dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
