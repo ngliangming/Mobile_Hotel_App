@@ -6,20 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".customerHome">
 
-    <Button
-        android:id="@+id/loginButton2"
+    <TextView
+        android:id="@+id/welcomeTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="340dp"
-        android:backgroundTint="@color/primary_white"
-        android:onClick="logout"
-        android:text="Logout"
-        android:textColor="@color/primary_text"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="100dp"
+        android:text="Welcome back, USERNAME"
+        android:textColor="@color/primary_black"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInput"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bookBtn"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/primary_white"
+        android:text="Book Room"
+        android:textColor="@color/primary_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTxt"
         app:strokeColor="@color/primary_black"
         app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/viewBtn"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="@color/primary_white"
+        android:text="Room Status"
+        android:textColor="@color/primary_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookBtn"
+        app:strokeColor="@color/primary_black"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/profileBtn"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="@color/primary_white"
+        android:text="Edit Profile"
+        android:textColor="@color/primary_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewBtn"
+        app:strokeColor="@color/primary_black"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="@color/primary_white"
+        android:text="Logout"
+        android:textColor="@color/primary_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileBtn"
+        app:strokeColor="@color/primary_black"
+        app:strokeWidth="1dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

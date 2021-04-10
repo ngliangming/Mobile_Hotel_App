@@ -25,11 +25,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Try to load user & login with shared pref
-        loadUser()
+        //Change action bar title
+        title = "Zenith Hotel - Login";
 
+        //Assign buttons
         binding.loginButton.setOnClickListener { loginBtn() }
         binding.signupButton.setOnClickListener { testFire() }
+
+        //Try to load user & login with shared pref
+        loadUser()
     }
 
     private fun testFire() {
@@ -52,8 +56,8 @@ class MainActivity : AppCompatActivity() {
         toggleUi(false)
         db.collection("users")
             .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(tag, "DocumentSnapshot added with ID: ${documentReference.id}")
+            .addOnSuccessListener { document ->
+                Log.d(tag, "DocumentSnapshot added with ID: ${document.id}")
 
                 val text = "Dummy Account Added"
                 val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
@@ -85,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
+                    val userId = document.id
                     val email = document.data.getValue("email").toString()
                     val password = document.data.getValue("password").toString()
                     val adminLevel = document.data.getValue("adminLevel").toString().toInt()
@@ -98,8 +103,8 @@ class MainActivity : AppCompatActivity() {
                     if (document.data.getValue("password") == passwordInput) {
                         loginStatus = true
 
-                        saveUser(name, password, email, adminLevel)
-                        login(name, adminLevel)
+                        saveUser(userId, name, password, email, adminLevel)
+                        login(userId, name, password, email, adminLevel)
                     }
 
                 }
@@ -121,17 +126,23 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun login(name: String, adminLevel: Int) {
-        val data1 = "name"
-        val data2 = "adminLevel"
+    private fun login(
+        userId: String,
+        name: String,
+        password: String,
+        email: String,
+        adminLevel: Int
+    ) {
 
         if (adminLevel == 0) {
             Log.d("Login", "client")
             startForResult.launch(
                 Intent(this, customerHome::class.java)
-//                .putExtra(data1, name))
-                    .putExtra(data1, name)
-                    .putExtra(data2, adminLevel)
+                    .putExtra("userId", userId)
+                    .putExtra("name", name)
+                    .putExtra("password", password)
+                    .putExtra("email", email)
+                    .putExtra("adminLevel", adminLevel)
             )
         } else {
             Log.d("Login", "admin")
@@ -143,11 +154,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveUser(name: String, password: String, email: String, adminLevel: Int) {
+    private fun saveUser(
+        userId: String,
+        name: String,
+        password: String,
+        email: String,
+        adminLevel: Int
+    ) {
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         editor.apply {
+            putString("userId", userId)
             putString("name", name)
             putString("password", password)
             putString("email", email)
@@ -160,7 +178,8 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        val name: String = sharedPreferences.getString("name", null).toString()
+        val userId = sharedPreferences.getString("userId", null).toString()
+        val name = sharedPreferences.getString("name", null).toString()
         val email = sharedPreferences.getString("email", null)
         val password = sharedPreferences.getString("password", null)
         val adminLevel = sharedPreferences.getInt("adminLevel", -1)
@@ -184,7 +203,7 @@ class MainActivity : AppCompatActivity() {
                         if (document.data.getValue("password") == password) {
                             loginStatus = true
 
-                            login(name, adminLevel)
+                            login(userId, name, password, email, adminLevel)
                         }
 
                     }

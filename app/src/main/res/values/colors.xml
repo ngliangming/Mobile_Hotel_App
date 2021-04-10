@@ -12,5 +12,6 @@
     <color name="primary_black">#333333</color>
     <color name="primary_gray">#DADADA</color>
     <color name="primary_base">#F4511E</color>
+    <color name="primary_base_variant">#E3704C</color>
     <color name="primary_text">#707070</color>
 </resources>

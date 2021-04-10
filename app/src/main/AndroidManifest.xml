@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileHotelAppAssignment">
-        <activity android:name=".customerHome"></activity>
+        <activity android:name=".bookRoomDetails"></activity>
+        <activity android:name=".bookRoom" />
+        <activity android:name=".customerHome" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
