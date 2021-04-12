@@ -306,6 +306,11 @@ class bookRoomDetails : AppCompatActivity() {
                             }
                     }
                 }
+                .addOnFailureListener { e ->
+                    val text = "Error Getting Rooms"
+                    val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
+                    toast.show()
+                }
         }
     }
 

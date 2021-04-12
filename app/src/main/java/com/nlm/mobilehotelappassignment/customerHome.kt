@@ -38,8 +38,8 @@ class customerHome : AppCompatActivity() {
 
         //Assign button functions
         binding.bookBtn.setOnClickListener { bookRoom() }
-        binding.viewBtn.setOnClickListener {}
-        binding.profileBtn.setOnClickListener {}
+        binding.viewBtn.setOnClickListener { viewRooms() }
+        binding.profileBtn.setOnClickListener { editProfile() }
         binding.logoutBtn.setOnClickListener { logout() }
 
 //        Enable action bar back button
@@ -62,6 +62,20 @@ class customerHome : AppCompatActivity() {
             .putExtra("userId", userId)
 
         startActivity(intent)
+    }
+
+    private fun viewRooms() {
+        val intent = Intent(this, ViewRooms::class.java)
+            .putExtra("userId", userId)
+
+        startActivity(intent)
+    }
+    private fun editProfile(){
+//        TODO add activity into Intent
+//        val intent = Intent(this, ???????::class.java)
+//            .putExtra("userId", userId)
+//
+//        startActivity(intent)
     }
 
     private fun logout() {

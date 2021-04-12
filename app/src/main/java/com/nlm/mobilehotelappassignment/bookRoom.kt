@@ -103,9 +103,7 @@ class bookRoom : AppCompatActivity() {
     }
 
     class CustomerViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-//        init {
-//            view.setOnClickListener { Log.d("DEBUG", "MSG") }
-//        }
+
     }
 
     public fun startBooking(roomType: String, roomPrice: Int, roomImg: String, minRoomNum: Int, maxRoomNum: Int) {
