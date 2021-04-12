@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -55,7 +56,7 @@ class bookRoomDetails : AppCompatActivity() {
         setContentView(binding.root)
 
         //Change action bar title
-        title = "Zenith Hotel";
+        title = "Zenith Hotel - Room Booking";
 
         //Enable action bar back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -106,8 +107,7 @@ class bookRoomDetails : AppCompatActivity() {
 
         binding.bookRoomBtn.setOnClickListener { book() }
 
-        Log.d("Total days", timestamp.daysBetween(eDate, sDate).toString())
-
+        toggleUi(true)
     }
 
     //    Assign back button function
@@ -125,7 +125,7 @@ class bookRoomDetails : AppCompatActivity() {
         val dpd =
             DatePickerDialog(
                 this,
-                DatePickerDialog.OnDateSetListener { view, year, month, day ->
+                { view, year, month, day ->
                     sYear = year
                     sMonth = month + 1
                     sDay = day
@@ -140,7 +140,6 @@ class bookRoomDetails : AppCompatActivity() {
                         totalPrice = 0
                         binding.totalPrice.text = totalPrice.toString()
                     }
-
                 }, sYear, sMonth - 1, sDay
             )
 
@@ -151,7 +150,7 @@ class bookRoomDetails : AppCompatActivity() {
         val dpd =
             DatePickerDialog(
                 this,
-                DatePickerDialog.OnDateSetListener { view, year, month, day ->
+                { view, year, month, day ->
                     eYear = year
                     eMonth = month + 1
                     eDay = day
@@ -166,7 +165,6 @@ class bookRoomDetails : AppCompatActivity() {
                         totalPrice = 0
                         binding.totalPrice.text = totalPrice.toString()
                     }
-
                 }, eYear, eMonth - 1, eDay
             )
 
@@ -199,6 +197,7 @@ class bookRoomDetails : AppCompatActivity() {
 
     private fun book() {
         if (checkDate()) {
+            toggleUi(false)
             var roomNumber = minRoomNumber
             val bookedRooms = mutableListOf<Room>()
             var booked = true
@@ -291,6 +290,8 @@ class bookRoomDetails : AppCompatActivity() {
                                 val returnIntent = Intent()
                                 returnIntent.putExtra("result", result)
                                 setResult(RESULT_OK, returnIntent)
+
+                                toggleUi(false)
                                 finish()
                             }
                             .addOnFailureListener { e ->
@@ -300,6 +301,8 @@ class bookRoomDetails : AppCompatActivity() {
                                 val toast =
                                     Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
                                 toast.show()
+
+                                toggleUi(false)
                             }
                     }
                 }
@@ -307,4 +310,21 @@ class bookRoomDetails : AppCompatActivity() {
     }
 
     class Room(val roomNumber: Int, val startDate: Int, val endDate: Int)
+
+    private fun toggleUi(switch: Boolean) {
+        if (switch) {
+            Log.d("Toggle", "On")
+            binding.progressBarBooking.visibility = View.GONE
+            binding.startDate.setOnClickListener { getStartDate(binding.startDate) }
+            binding.endDate.setOnClickListener { getEndDate(binding.endDate) }
+            binding.bookConstraint.foreground = null
+        } else {
+            Log.d("Toggle", "Off")
+            binding.progressBarBooking.visibility = View.VISIBLE
+            binding.startDate.setOnClickListener { }
+            binding.endDate.setOnClickListener { }
+            binding.bookConstraint.foreground = getDrawable(R.color.semi_transparent)
+        }
+
+    }
 }

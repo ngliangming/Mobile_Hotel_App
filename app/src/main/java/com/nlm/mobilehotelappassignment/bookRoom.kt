@@ -27,7 +27,7 @@ class bookRoom : AppCompatActivity() {
         setContentView(binding.root)
 
         //Change action bar title
-        title = "Zenith Hotel";
+        title = "Zenith Hotel - Room Booking";
 
         //Enable action bar back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

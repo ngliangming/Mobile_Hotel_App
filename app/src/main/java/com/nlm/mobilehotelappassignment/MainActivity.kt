@@ -251,6 +251,7 @@ class MainActivity : AppCompatActivity() {
             binding.passwordInput.isEnabled = true
             binding.loginButton.isEnabled = true
             binding.signupButton.isEnabled = true
+            binding.loginConstraint.foreground = null
         } else {
             Log.d("Toggle", "Off")
             binding.progressBar.visibility = View.VISIBLE
@@ -258,6 +259,7 @@ class MainActivity : AppCompatActivity() {
             binding.passwordInput.isEnabled = false
             binding.loginButton.isEnabled = false
             binding.signupButton.isEnabled = false
+            binding.loginConstraint.foreground = getDrawable(R.color.semi_transparent)
         }
 
     }
