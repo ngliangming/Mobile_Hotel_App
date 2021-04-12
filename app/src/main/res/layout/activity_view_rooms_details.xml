@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -8,7 +9,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".bookRoomDetails">
+        tools:context=".ViewRoomsDetails">
 
         <LinearLayout
             android:id="@+id/bookConstraint"
@@ -18,6 +19,41 @@
             android:padding="15dp"
             tools:layout_editor_absoluteX="218dp"
             tools:layout_editor_absoluteY="448dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:background="@color/primary_gray"
+                    android:padding="10dp"
+                    android:text="Room Number"
+                    android:textColor="@color/primary_black"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/roomNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="5"
+                    android:background="@color/primary_gray"
+                    android:padding="10dp"
+                    android:text="TYPE"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/primary_black"
+                    android:textSize="22sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/roomImg"
@@ -195,14 +231,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/bookRoomBtn"
+                <TextView
+                    android:id="@+id/roomStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight=".1"
-                    android:background="@drawable/thin_border"
-                    android:text="Book Now"
+                    android:layout_weight="2"
+                    android:background="@color/primary_gray"
+                    android:padding="10dp"
+                    android:text="STATUS"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/primary_black"
                     android:textSize="22sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -211,17 +250,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/progressBarBooking"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

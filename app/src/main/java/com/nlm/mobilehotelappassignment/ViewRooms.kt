@@ -66,8 +66,12 @@ class ViewRooms : AppCompatActivity() {
                 for (document in documents) {
                     val bookingId = document.id
                     val roomNumber = document.data.getValue("roomNumber").toString().toInt()
+                    val roomStatus = document.data.getValue("status").toString()
                     val type = document.data.getValue("roomType").toString()
                     val price = document.data.getValue("cost").toString().toInt()
+                    val startDate = document.data.getValue("startDate").toString()
+                    val endDate = document.data.getValue("endDate").toString()
+
                     var img: String = ""
 
                     //TODO Add code to determine image
@@ -77,7 +81,19 @@ class ViewRooms : AppCompatActivity() {
                         "Suite" -> img = "suite_room"
                     }
 
-                    roomList.add(Room(bookingId, roomNumber, type, price, img))
+                    roomList.add(
+                        Room(
+                            userId,
+                            bookingId,
+                            roomNumber,
+                            roomStatus,
+                            type,
+                            price,
+                            startDate,
+                            endDate,
+                            img
+                        )
+                    )
                 }
 
                 binding.recyclerViewRoomType.layoutManager = LinearLayoutManager(this)
@@ -97,7 +113,7 @@ class ViewRooms : AppCompatActivity() {
 
     class ViewAdapter(
         val roomList: RoomList,
-        val passedFunc: (bookingId: String, roomNumber: Int, roomType: String, roomPrice: Int, roomImg: String) -> (Unit)
+        val passedFunc: (userId: String, bookingId: String, roomNumber: Int, roomStatus: String, roomType: String, roomPrice: Int, startDate: String, endDate: String, roomImg: String) -> (Unit)
     ) : RecyclerView.Adapter<CustomerViewHolder>() {
         //number of items
         override fun getItemCount(): Int {
@@ -129,7 +145,17 @@ class ViewRooms : AppCompatActivity() {
             //Add onClick Listener
             viewBtn.setOnClickListener {
                 //Run accepted function (From constructor)
-                passedFunc(room.bookingId, room.roomNumber, room.type, room.price, room.roomImg)
+                passedFunc(
+                    room.userId,
+                    room.bookingId,
+                    room.roomNumber,
+                    room.roomStatus,
+                    room.type,
+                    room.price,
+                    room.startDate,
+                    room.endDate,
+                    room.roomImg
+                )
             }
         }
 
@@ -139,22 +165,30 @@ class ViewRooms : AppCompatActivity() {
 
     }
 
-    public fun viewRoom(
+    fun viewRoom(
+        userId: String,
         bookingId: String,
         roomNumber: Int,
+        roomStatus: String,
         roomType: String,
         roomPrice: Int,
+        startDate: String,
+        endDate: String,
         roomImg: String
     ) {
         //TODO ADD NEW ROOM ACTIVITY
-//        val intent = Intent(this, ViewRoomDetails::class.java)
-//            .putExtra("userId", userId)
-//            .putExtra("roomType", roomType)
-//            .putExtra("roomPrice", roomPrice)
-//            .putExtra("roomImg", roomImg)
-//            .putExtra("minRoomNumber", roomNumber)
-//
-//        startActivity(intent)
+        val intent = Intent(this, ViewRoomsDetails::class.java)
+            .putExtra("userId", userId)
+            .putExtra("bookingId", bookingId)
+            .putExtra("roomNumber", roomNumber)
+            .putExtra("roomStatus", roomStatus)
+            .putExtra("roomType", roomType)
+            .putExtra("roomPrice", roomPrice)
+            .putExtra("startDate", startDate)
+            .putExtra("endDate", endDate)
+            .putExtra("roomImg", roomImg)
+
+        startActivity(intent)
     }
 
     class RoomList(var rooms: List<Room> = listOf<Room>()) {
@@ -164,11 +198,15 @@ class ViewRooms : AppCompatActivity() {
     }
 
     class Room(
+        val userId: String,
         val bookingId: String,
         val roomNumber: Int,
+        val roomStatus: String,
         val type: String,
         val price: Int,
-        val roomImg: String
+        val startDate: String,
+        val endDate: String,
+        val roomImg: String,
     )
 
     private fun toggleUi(switch: Boolean) {
