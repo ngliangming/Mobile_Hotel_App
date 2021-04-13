@@ -30,50 +30,18 @@ class MainActivity : AppCompatActivity() {
 
         //Assign buttons
         binding.loginButton.setOnClickListener { loginBtn() }
-        binding.signupButton.setOnClickListener { testFire() }
+        binding.signupButton.setOnClickListener { signupButton() }
 
         //Try to load user & login with shared pref
         loadUser()
     }
 
-    private fun testFire() {
-        val tag = "Firestore Out"
-
-        val level = 0
-        val email = "demo1@gmail.com"
-        val name = "demo guy 1"
-        val password = "abc123"
-
-        // Create a new user with a first and last name
-        val user = hashMapOf(
-            "adminLevel" to level,
-            "email" to email,
-            "name" to name,
-            "password" to password
-        )
-
-        // Add a new document with a generated ID
-        toggleUi(false)
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { document ->
-                Log.d(tag, "DocumentSnapshot added with ID: ${document.id}")
-
-                val text = "Dummy Account Added"
-                val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
-                toast.show()
-
-                toggleUi(true)
-            }
-            .addOnFailureListener { e ->
-                Log.w(tag, "Error adding document", e)
-
-                val text = "Error Adding"
-                val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
-                toast.show()
-
-                toggleUi(true)
-            }
+    private fun signupButton(){
+        val button = binding.signupButton
+        button.setOnClickListener{
+            val intent = Intent(this, signUp::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun loginBtn() {
