@@ -23,6 +23,7 @@ class bookRoomDetails : AppCompatActivity() {
     private val timestamp = TimestampConverter()
 
     private lateinit var userId: String
+    private lateinit var email: String
     private lateinit var roomType: String
     private var roomPrice: Int = -1
     private lateinit var roomImg: String
@@ -63,6 +64,7 @@ class bookRoomDetails : AppCompatActivity() {
 
         //Get binding
         userId = intent.getStringExtra("userId").toString()
+        email = intent.getStringExtra("email").toString()
         roomType = intent.getStringExtra("roomType").toString()
         roomPrice = intent.getIntExtra("roomPrice", -1)
         roomImg = intent.getStringExtra("roomImg").toString()
@@ -268,6 +270,7 @@ class bookRoomDetails : AppCompatActivity() {
                             "roomNumber" to roomNumber,
                             "roomType" to roomType,
                             "userId" to userId,
+                            "userEmail" to email,
                             "cost" to roomPrice,
                             "startDate" to sDate,
                             "endDate" to eDate,

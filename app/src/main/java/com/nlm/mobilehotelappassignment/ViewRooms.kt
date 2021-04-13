@@ -57,7 +57,9 @@ class ViewRooms : AppCompatActivity() {
 
         //Create List of rooms
         var roomList = RoomList()
-        //Populate List with rooms based on userId
+
+//        //Populate List with rooms based on userId
+
         db.collection("booking")
             .whereEqualTo("userId", userId)
             .orderBy("startDate", Query.Direction.ASCENDING)

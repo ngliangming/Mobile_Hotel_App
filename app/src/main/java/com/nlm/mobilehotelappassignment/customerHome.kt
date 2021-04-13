@@ -60,6 +60,7 @@ class customerHome : AppCompatActivity() {
     private fun bookRoom() {
         val intent = Intent(this, bookRoom::class.java)
             .putExtra("userId", userId)
+            .putExtra("email", email)
 
         startActivity(intent)
     }
