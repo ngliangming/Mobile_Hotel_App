@@ -71,12 +71,16 @@ class signUp : AppCompatActivity() {
                 db.collection("users")
                     .document(emailInput)
                     .get()
-                    .addOnSuccessListener {
+                    .addOnSuccessListener { existing->
+                        if(existing.exists()){
+                            valid = false
+                        }
 
                         if (valid) {
                             db.collection("users").document(emailInput)
                                 .set(userProf)
-                                .addOnSuccessListener {
+                                .addOnSuccessListener { user ->
+
                                     Log.d(
                                         tag,
                                         "DocumentSnapshot added with ID: $emailInput"
@@ -97,6 +101,7 @@ class signUp : AppCompatActivity() {
                                                                 baseContext, "Email verification sent.",
                                                                 Toast.LENGTH_SHORT
                                                             ).show()
+                                                            auth.signOut()
                                                             finish()
                                                         } else {
                                                             Toast.makeText(

@@ -10,11 +10,9 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.nlm.mobilehotelappassignment.databinding.ActivityBookRoomDetailsBinding
-import java.sql.Timestamp
 import java.util.*
 
 class bookRoomDetails : AppCompatActivity() {

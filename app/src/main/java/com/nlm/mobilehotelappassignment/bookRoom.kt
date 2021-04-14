@@ -13,8 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.nlm.mobilehotelappassignment.databinding.ActivityBookRoomBinding
 
 class bookRoom : AppCompatActivity() {
@@ -27,7 +25,7 @@ class bookRoom : AppCompatActivity() {
         setContentView(binding.root)
 
         //Change action bar title
-        title = "Zenith Hotel - Room Booking";
+        title = "Zenith Hotel - Room Booking"
 
         //Enable action bar back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -48,9 +46,9 @@ class bookRoom : AppCompatActivity() {
         }
     }
 
-    fun initiateView() {
+    private fun initiateView() {
         //Create List of rooms
-        var roomList = RoomList()
+        val roomList = RoomList()
 
         //Populate List with rooms
         roomList.add(Room("Single", 250, "single_room", 100, 199))
@@ -62,7 +60,7 @@ class bookRoom : AppCompatActivity() {
     }
 
     class ViewAdapter(
-        val roomList: RoomList,
+        private val roomList: RoomList,
         val passedFunc: (
             roomType: String, roomPrice: Int, roomImg: String, minRoomNum: Int, maxRoomNum: Int
         ) -> (Unit)
@@ -74,14 +72,14 @@ class bookRoom : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomerViewHolder {
             //Create view
-            val layoutInflater = LayoutInflater.from(parent?.context)
+            val layoutInflater = LayoutInflater.from(parent.context)
             val cellForRow = layoutInflater.inflate(R.layout.book_room_row, parent, false)
             return CustomerViewHolder(cellForRow)
         }
 
         override fun onBindViewHolder(holder: CustomerViewHolder, position: Int) {
             //Get invididual room
-            val room = roomList.rooms.get(position)
+            val room = roomList.rooms[position]
 
             //Get UI controller
             val roomTypeView = holder.view.findViewById<TextView>(R.id.roomType)
@@ -106,7 +104,7 @@ class bookRoom : AppCompatActivity() {
 
     }
 
-    public fun startBooking(
+    private fun startBooking(
         roomType: String,
         roomPrice: Int,
         roomImg: String,
@@ -129,14 +127,11 @@ class bookRoom : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 //Booked
                 finish()
-            } else {
-                //Back
-
             }
         }
 
 
-    class RoomList(var rooms: List<Room> = listOf<Room>()) {
+    class RoomList(var rooms: List<Room> = listOf()) {
         fun add(room: Room) {
             rooms += room
         }

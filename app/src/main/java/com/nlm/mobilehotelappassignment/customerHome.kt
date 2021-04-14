@@ -2,17 +2,13 @@ package com.nlm.mobilehotelappassignment
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NavUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.nlm.mobilehotelappassignment.databinding.ActivityCustomerHomeBinding
 
 
 class customerHome : AppCompatActivity() {
-    lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityCustomerHomeBinding
 
     private lateinit var name: String
@@ -33,7 +29,7 @@ class customerHome : AppCompatActivity() {
         binding.welcomeTxt.text = welcomeText
 
         //Change action bar title
-        title = "Zenith Hotel";
+        title = "Zenith Hotel"
 
         //Assign button functions
         binding.bookBtn.setOnClickListener { bookRoom() }
@@ -80,7 +76,7 @@ class customerHome : AppCompatActivity() {
     private fun logout() {
         auth.signOut()
 
-        var result = true;
+        val result = true
         val returnIntent = Intent()
         returnIntent.putExtra("result", result)
         setResult(RESULT_OK, returnIntent)

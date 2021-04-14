@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Change action bar title
-        title = "Zenith Hotel - Login";
+        title = "Zenith Hotel - Login"
 
         //Assign buttons
         binding.loginButton.setOnClickListener {
@@ -47,9 +47,6 @@ class MainActivity : AppCompatActivity() {
 
             val emailInput = binding.emailInput.text.toString()
             val passwordInput = binding.passwordInput.text.toString()
-
-            val tag = "login"
-            var loginStatus = false
 
             if (TextUtils.isEmpty(emailInput)) {
                 binding.passwordInput.error = "Please enter email"
@@ -89,8 +86,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.signupButton.setOnClickListener { signupButton() }
 
-        //Try to load user & login with shared pref
-//        loadUser()
     }
 
     private fun signupButton() {
@@ -108,10 +103,10 @@ class MainActivity : AppCompatActivity() {
         val user = auth.currentUser
         val email: String = user?.email.toString()
 
-        Log.d("DEBUG", user.email)
+        Log.d("DEBUG", email)
 
-        var username: String = ""
-        var adminLevel: Int = -1
+        var username: String
+        var adminLevel: Int
 
         db.collection("users")
             .document(email)
@@ -136,113 +131,27 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun loginIntent(email: String, username: String, adminLevel: Int) {
+    private fun loginIntent(email: String, username: String, adminLevel: Int) {
         if (adminLevel == 0) {
             Log.d("Login", "client")
             startForResult.launch(
                 Intent(this, customerHome::class.java)
                     .putExtra("email", email)
                     .putExtra("name", username)
+                    .putExtra("adminLevel", adminLevel)
             )
+            toggleUi(true)
         } else {
             Log.d("Login", "admin")
 //            startForResult.launch(
 //                Intent(this, adminHome::class.java)
 //                    .putExtra("email", email)
 //                    .putExtra("name", username)
-//                    .putExtra(data2, adminLevel)
+//                    .putExtra("adminLevel", adminLevel)
 //            )
+            toggleUi(true)
         }
     }
-//
-//    private fun saveUser(
-//        userId: String,
-//        name: String,
-//        password: String,
-//        email: String,
-//        adminLevel: Int
-//    ) {
-//        val sharedPreferences: SharedPreferences =
-//            getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-//        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-//        editor.apply {
-//            putString("userId", userId)
-//            putString("name", name)
-//            putString("password", password)
-//            putString("email", email)
-//            putInt("adminLevel", adminLevel)
-//        }.apply()
-//    }
-//
-//    private fun loadUser() {
-//        toggleUi(false)
-//
-//        val sharedPreferences: SharedPreferences =
-//            getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-//        val userId = sharedPreferences.getString("userId", null).toString()
-//        val name = sharedPreferences.getString("name", null).toString()
-//        val email = sharedPreferences.getString("email", null)
-//        val password = sharedPreferences.getString("password", null)
-//        val adminLevel = sharedPreferences.getInt("adminLevel", -1)
-//
-//        val tag = "login"
-//        var loginStatus = false
-//
-//        if (email != null && password != null) {
-//            db.collection("users")
-//                .whereEqualTo("email", email)
-//                .get()
-//                .addOnSuccessListener { documents ->
-//
-//                    for (document in documents) {
-//
-//                        Log.d(
-//                            tag,
-//                            "$email => $password | $adminLevel"
-//                        )
-//
-//                        if (document.data.getValue("password") == password) {
-//                            loginStatus = true
-//
-//                            login(userId, name, password, email, adminLevel)
-//                        }
-//
-//                    }
-//
-//                    if (!loginStatus) {
-//                        Log.d(tag, "login fail")
-//
-//                        val text = "Credentials Changed"
-//                        val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
-//                        toast.show()
-//
-//                        clearData()
-//
-//                    }
-//
-//                    toggleUi(true)
-//                }
-//                .addOnFailureListener { exception ->
-//                    Log.w(tag, "Error getting documents: ", exception)
-//
-//                    toggleUi(true)
-//                }
-//        } else {
-//            toggleUi(true)
-//        }
-//    }
-//
-//    private fun clearData() {
-//        val sharedPreferences: SharedPreferences =
-//            getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-//        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-//        editor.apply {
-//            putString("name", null)
-//            putString("password", null)
-//            putString("email", null)
-//            putInt("adminLevel", -1)
-//        }.apply()
-//    }
 
     private fun toggleUi(switch: Boolean) {
         if (switch) {
