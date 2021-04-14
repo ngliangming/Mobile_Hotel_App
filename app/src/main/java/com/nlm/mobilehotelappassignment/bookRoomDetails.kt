@@ -22,7 +22,6 @@ class bookRoomDetails : AppCompatActivity() {
     private lateinit var binding: ActivityBookRoomDetailsBinding
     private val timestamp = TimestampConverter()
 
-    private lateinit var userId: String
     private lateinit var email: String
     private lateinit var roomType: String
     private var roomPrice: Int = -1
@@ -63,7 +62,6 @@ class bookRoomDetails : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //Get binding
-        userId = intent.getStringExtra("userId").toString()
         email = intent.getStringExtra("email").toString()
         roomType = intent.getStringExtra("roomType").toString()
         roomPrice = intent.getIntExtra("roomPrice", -1)
@@ -269,7 +267,6 @@ class bookRoomDetails : AppCompatActivity() {
                         val room = hashMapOf(
                             "roomNumber" to roomNumber,
                             "roomType" to roomType,
-                            "userId" to userId,
                             "userEmail" to email,
                             "cost" to roomPrice,
                             "startDate" to sDate,

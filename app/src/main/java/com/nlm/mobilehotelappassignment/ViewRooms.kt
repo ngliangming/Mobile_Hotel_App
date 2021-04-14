@@ -23,7 +23,7 @@ import com.nlm.mobilehotelappassignment.databinding.ActivityViewRoomsBinding
 class ViewRooms : AppCompatActivity() {
     private val db = Firebase.firestore
     private lateinit var binding: ActivityViewRoomsBinding
-    private lateinit var userId: String
+    private lateinit var userEmail: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class ViewRooms : AppCompatActivity() {
         //Enable action bar back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        userId = intent.getStringExtra("userId").toString()
+        userEmail = intent.getStringExtra("email").toString()
 
         initiateView()
     }
@@ -58,10 +58,10 @@ class ViewRooms : AppCompatActivity() {
         //Create List of rooms
         var roomList = RoomList()
 
-//        //Populate List with rooms based on userId
+//        //Populate List with rooms based on userEmail
 
         db.collection("booking")
-            .whereEqualTo("userId", userId)
+            .whereEqualTo("userEmail", userEmail)
             .orderBy("startDate", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { documents ->
@@ -85,7 +85,7 @@ class ViewRooms : AppCompatActivity() {
 
                     roomList.add(
                         Room(
-                            userId,
+                            userEmail,
                             bookingId,
                             roomNumber,
                             roomStatus,
@@ -115,7 +115,7 @@ class ViewRooms : AppCompatActivity() {
 
     class ViewAdapter(
         val roomList: RoomList,
-        val passedFunc: (userId: String, bookingId: String, roomNumber: Int, roomStatus: String, roomType: String, roomPrice: Int, startDate: String, endDate: String, roomImg: String) -> (Unit)
+        val passedFunc: (bookingId: String, roomNumber: Int, roomStatus: String, roomType: String, roomPrice: Int, startDate: String, endDate: String, roomImg: String) -> (Unit)
     ) : RecyclerView.Adapter<CustomerViewHolder>() {
         //number of items
         override fun getItemCount(): Int {
@@ -148,7 +148,6 @@ class ViewRooms : AppCompatActivity() {
             viewBtn.setOnClickListener {
                 //Run accepted function (From constructor)
                 passedFunc(
-                    room.userId,
                     room.bookingId,
                     room.roomNumber,
                     room.roomStatus,
@@ -168,7 +167,6 @@ class ViewRooms : AppCompatActivity() {
     }
 
     fun viewRoom(
-        userId: String,
         bookingId: String,
         roomNumber: Int,
         roomStatus: String,
@@ -178,9 +176,8 @@ class ViewRooms : AppCompatActivity() {
         endDate: String,
         roomImg: String
     ) {
-        //TODO ADD NEW ROOM ACTIVITY
+
         val intent = Intent(this, ViewRoomsDetails::class.java)
-            .putExtra("userId", userId)
             .putExtra("bookingId", bookingId)
             .putExtra("roomNumber", roomNumber)
             .putExtra("roomStatus", roomStatus)
@@ -200,7 +197,7 @@ class ViewRooms : AppCompatActivity() {
     }
 
     class Room(
-        val userId: String,
+        val userEmail: String,
         val bookingId: String,
         val roomNumber: Int,
         val roomStatus: String,

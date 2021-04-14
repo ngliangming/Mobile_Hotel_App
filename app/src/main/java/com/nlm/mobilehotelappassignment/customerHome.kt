@@ -7,28 +7,27 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
+import com.google.firebase.auth.FirebaseAuth
 import com.nlm.mobilehotelappassignment.databinding.ActivityCustomerHomeBinding
 
 
 class customerHome : AppCompatActivity() {
+    lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityCustomerHomeBinding
 
-    private lateinit var userId: String
     private lateinit var name: String
-    private lateinit var password: String
     private lateinit var email: String
-    private var adminLevel: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCustomerHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userId = intent.getStringExtra("userId").toString()
+        auth = FirebaseAuth.getInstance()
         name = intent.getStringExtra("name").toString()
-        password = intent.getStringExtra("password").toString()
-        email = intent.getStringExtra("email").toString()
-        adminLevel = intent.getIntExtra("adminLevel", -1)
+
+        val user = auth.currentUser
+        email = user?.email.toString()
 
         val welcomeText = "Welcome back, $name"
         binding.welcomeTxt.text = welcomeText
@@ -59,7 +58,6 @@ class customerHome : AppCompatActivity() {
 
     private fun bookRoom() {
         val intent = Intent(this, bookRoom::class.java)
-            .putExtra("userId", userId)
             .putExtra("email", email)
 
         startActivity(intent)
@@ -67,7 +65,7 @@ class customerHome : AppCompatActivity() {
 
     private fun viewRooms() {
         val intent = Intent(this, ViewRooms::class.java)
-            .putExtra("userId", userId)
+            .putExtra("email", email)
 
         startActivity(intent)
     }
@@ -80,6 +78,8 @@ class customerHome : AppCompatActivity() {
     }
 
     private fun logout() {
+        auth.signOut()
+
         var result = true;
         val returnIntent = Intent()
         returnIntent.putExtra("result", result)

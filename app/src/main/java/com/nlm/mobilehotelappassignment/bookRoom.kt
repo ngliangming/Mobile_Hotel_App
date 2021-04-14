@@ -19,7 +19,6 @@ import com.nlm.mobilehotelappassignment.databinding.ActivityBookRoomBinding
 
 class bookRoom : AppCompatActivity() {
     private lateinit var binding: ActivityBookRoomBinding
-    private lateinit var userId: String
     private lateinit var email: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +32,6 @@ class bookRoom : AppCompatActivity() {
         //Enable action bar back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        userId = intent.getStringExtra("userId").toString()
         email = intent.getStringExtra("email").toString()
 
         initiateView()
@@ -117,7 +115,6 @@ class bookRoom : AppCompatActivity() {
     ) {
         startForResult.launch(
             Intent(this, bookRoomDetails::class.java)
-                .putExtra("userId", userId)
                 .putExtra("email", email)
                 .putExtra("roomType", roomType)
                 .putExtra("roomPrice", roomPrice)

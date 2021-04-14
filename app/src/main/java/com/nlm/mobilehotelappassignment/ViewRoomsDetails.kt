@@ -20,7 +20,6 @@ class ViewRoomsDetails : AppCompatActivity() {
     private lateinit var binding: ActivityViewRoomsDetailsBinding
     private val timestamp = TimestampConverter()
 
-    private lateinit var userId: String
     private lateinit var bookingId: String
     private var roomNumber: Int = -1
     private lateinit var roomStatus: String
@@ -50,7 +49,6 @@ class ViewRoomsDetails : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //Get binding
-        userId = intent.getStringExtra("userId").toString()
         bookingId = intent.getStringExtra("bookingId").toString()
         roomNumber = intent.getIntExtra("roomNumber", -1)
         roomStatus = intent.getStringExtra("roomStatus").toString()

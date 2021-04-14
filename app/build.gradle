@@ -82,4 +82,7 @@ dependencies {
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha09"
 
+    //Google Firebase Auth/Database
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
+    implementation 'com.google.firebase:firebase-database:19.4.0'
 }

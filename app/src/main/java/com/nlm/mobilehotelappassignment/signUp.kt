@@ -1,13 +1,10 @@
 package com.nlm.mobilehotelappassignment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.FirebaseError
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.nlm.mobilehotelappassignment.databinding.ActivitySignUpBinding
@@ -15,6 +12,7 @@ import java.util.regex.Pattern
 
 class signUp : AppCompatActivity() {
     private val db = Firebase.firestore
+    private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivitySignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,11 +20,13 @@ class signUp : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.createuserButton.setOnClickListener { createuserBtn() }
+        auth = FirebaseAuth.getInstance()
+
+        binding.createuserButton.setOnClickListener { createUserBtn() }
     }
 
     //check for email pattern
-    val EMAIL_ADDRESS_PATTERN: Pattern = Pattern.compile(
+    private val EMAIL_ADDRESS_PATTERN: Pattern = Pattern.compile(
         "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                 "\\@" +
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
@@ -41,58 +41,70 @@ class signUp : AppCompatActivity() {
         return EMAIL_ADDRESS_PATTERN.matcher(email).matches()
     }
 
-    private fun createuserBtn() {
+    private fun createUserBtn() {
         val tag = "Firestore Out"
 
         var valid = true
-        val emailInput = binding.emailSignup.text.toString()
+        val emailInput = binding.emailInput.text.toString()
         val nameInput = binding.nameSignup.text.toString()
         val passwordInput = binding.passwordSignup.text.toString()
         val level = 0
 
-        val user = hashMapOf(
-            "adminLevel" to level,
-            "email" to emailInput,
-            "name" to nameInput,
-            "password" to passwordInput
+        val userProf = hashMapOf(
+            "username" to nameInput,
+            "adminLevel" to level
         )
 
-        if (nameInput.isNullOrEmpty()) { //if name is  null
-            binding.nameSignup.setError("Please enter a name")
+        if (nameInput.isEmpty()) { //if name is  null
+            binding.nameSignup.error = "Please enter a name"
             valid = false
         }
 
         if (passwordInput.length < 6) { //if password too short
-            binding.passwordSignup.setError("Password too short!")
+            binding.passwordSignup.error = "Password too short!"
             valid = false
         }
 
-        if (!emailInput.isNullOrEmpty()) { // if not empty
+        if (emailInput.isNotEmpty()) { // if not empty
             if (checkEmail(emailInput)) { // is correct email format ?
 
                 db.collection("users")
-                    .whereEqualTo("email", emailInput)
+                    .document(emailInput)
                     .get()
-                    .addOnSuccessListener { users ->
-                        for (user in users) {
-                            val checkExistEmail = user.data.getValue("email").toString()
-                            binding.emailSignup.setError("Email existed! Please enter another email.")
-                            valid = false
-                        }
+                    .addOnSuccessListener {
 
                         if (valid) {
-                            db.collection("users")
-                                .add(user)
-                                .addOnSuccessListener { documentReference ->
+                            db.collection("users").document(emailInput)
+                                .set(userProf)
+                                .addOnSuccessListener {
                                     Log.d(
                                         tag,
-                                        "DocumentSnapshot added with ID: ${documentReference.id}"
+                                        "DocumentSnapshot added with ID: $emailInput"
                                     )
 
                                     val text = "Account Successfully Added"
                                     val toast =
                                         Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
                                     toast.show()
+
+                                    auth.createUserWithEmailAndPassword(emailInput, passwordInput)
+                                        .addOnCompleteListener {
+                                            if (it.isSuccessful) {
+                                                Toast.makeText(
+                                                    this@signUp,
+                                                    "Registration Success. ",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                                finish()
+
+                                            } else {
+                                                Toast.makeText(
+                                                    this@signUp,
+                                                    "Registration failed, please try again! ",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                            }
+                                        }
                                 }
                                 .addOnFailureListener { e ->
                                     Log.w(tag, "Error adding document", e)
@@ -112,11 +124,11 @@ class signUp : AppCompatActivity() {
                         }
                     }
             } else {
-                binding.emailSignup.setError("Please enter a correct email format")
+                binding.emailInput.error = "Please enter a correct email format"
                 valid = false
             }
-        }else{
-            binding.emailSignup.setError("Please enter email")
+        } else {
+            binding.emailInput.error = "Please enter email"
             valid = false
         }
     }
