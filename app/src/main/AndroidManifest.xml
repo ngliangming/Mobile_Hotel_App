@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/zenith_hotels_blk"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/zenith_hotels_blk"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileHotelAppAssignment">
         <activity android:name=".signUp"></activity>
