@@ -66,11 +66,19 @@ class MainActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(emailInput, passwordInput)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        login()
+                        if (FirebaseAuth.getInstance().currentUser?.isEmailVerified!!){
+                            login()
+
+                        }
+                        else{
+                            Toast.makeText(applicationContext, "Please verify your email address.",
+                                Toast.LENGTH_SHORT).show()
+                            toggleUi(true)
+                        }
 
                     } else {
                         Toast.makeText(
-                            this@MainActivity,
+                            applicationContext,
                             "Login failed, please try again! ",
                             Toast.LENGTH_LONG
                         ).show()
@@ -98,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         toggleUi(false)
 
         val user = auth.currentUser
-        val email:String = user?.email.toString()
+        val email: String = user?.email.toString()
 
         Log.d("DEBUG", user.email)
 
@@ -114,8 +122,11 @@ class MainActivity : AppCompatActivity() {
                     username = userData.get("username").toString()
                     adminLevel = userData.get("adminLevel").toString().toInt()
 
-                        loginIntent(email, username, adminLevel)
+                    loginIntent(email, username, adminLevel)
 
+                } else {
+                    toggleUi(true)
+                    auth.signOut()
                 }
             }
             .addOnFailureListener { exception ->

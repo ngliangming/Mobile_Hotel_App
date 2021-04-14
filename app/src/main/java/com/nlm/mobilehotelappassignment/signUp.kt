@@ -90,12 +90,23 @@ class signUp : AppCompatActivity() {
                                     auth.createUserWithEmailAndPassword(emailInput, passwordInput)
                                         .addOnCompleteListener {
                                             if (it.isSuccessful) {
-                                                Toast.makeText(
-                                                    this@signUp,
-                                                    "Registration Success. ",
-                                                    Toast.LENGTH_LONG
-                                                ).show()
-                                                finish()
+                                                FirebaseAuth.getInstance().currentUser?.sendEmailVerification()
+                                                    ?.addOnCompleteListener {
+                                                        if (it.isSuccessful) {
+                                                            Toast.makeText(
+                                                                baseContext, "Email verification sent.",
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                            finish()
+                                                        } else {
+                                                            Toast.makeText(
+                                                                baseContext,
+                                                                "Register failed.",
+                                                                Toast.LENGTH_SHORT
+                                                            ).show()
+                                                        }
+                                                    }
+
 
                                             } else {
                                                 Toast.makeText(
