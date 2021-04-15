@@ -2,6 +2,7 @@ package com.nlm.mobilehotelappassignment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +24,8 @@ class signUp : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         binding.createuserButton.setOnClickListener { createUserBtn() }
+
+        toggleUi(true)
     }
 
     //check for email pattern
@@ -42,6 +45,7 @@ class signUp : AppCompatActivity() {
     }
 
     private fun createUserBtn() {
+        toggleUi(false)
         val tag = "Firestore Out"
 
         var valid = true
@@ -67,86 +71,106 @@ class signUp : AppCompatActivity() {
 
         if (emailInput.isNotEmpty()) { // if not empty
             if (checkEmail(emailInput)) { // is correct email format ?
+                //If Valid
+                if (valid) {
 
-                db.collection("users")
-                    .document(emailInput)
-                    .get()
-                    .addOnSuccessListener { existing->
-                        if(existing.exists()){
-                            valid = false
-                        }
+                    //Create User in Auth
+                    auth.createUserWithEmailAndPassword(emailInput, passwordInput)
+                        .addOnCompleteListener {
 
-                        if (valid) {
-                            db.collection("users").document(emailInput)
-                                .set(userProf)
-                                .addOnSuccessListener { user ->
+                            //Created
+                            if (it.isSuccessful) {
 
-                                    Log.d(
-                                        tag,
-                                        "DocumentSnapshot added with ID: $emailInput"
-                                    )
+                                //Add info to database
+                                db.collection("users").document(emailInput)
+                                    .set(userProf)
+                                    .addOnSuccessListener {
 
-                                    val text = "Account Successfully Added"
-                                    val toast =
-                                        Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
-                                    toast.show()
+                                        Log.d(tag, "USER Info added with ID: $emailInput")
 
-                                    auth.createUserWithEmailAndPassword(emailInput, passwordInput)
-                                        .addOnCompleteListener {
-                                            if (it.isSuccessful) {
-                                                FirebaseAuth.getInstance().currentUser?.sendEmailVerification()
-                                                    ?.addOnCompleteListener {
-                                                        if (it.isSuccessful) {
-                                                            Toast.makeText(
-                                                                baseContext, "Email verification sent.",
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
-                                                            auth.signOut()
-                                                            finish()
-                                                        } else {
-                                                            Toast.makeText(
-                                                                baseContext,
-                                                                "Register failed.",
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
-                                                        }
-                                                    }
+                                        //Send Email Verify
+                                        FirebaseAuth.getInstance().currentUser?.sendEmailVerification()
+                                            ?.addOnCompleteListener {
+                                                if (it.isSuccessful) {
+                                                    Toast.makeText(
+                                                        baseContext,
+                                                        "Email verification sent.",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
 
-
-                                            } else {
-                                                Toast.makeText(
-                                                    this@signUp,
-                                                    "Registration failed, please try again! ",
-                                                    Toast.LENGTH_LONG
-                                                ).show()
+                                                    auth.signOut()
+                                                    finish()
+                                                } else {
+                                                    Toast.makeText(
+                                                        baseContext,
+                                                        "Register failed.",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                    toggleUi(true)
+                                                }
                                             }
-                                        }
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.w(tag, "Error adding document", e)
 
-                                    val text = "Error Adding"
-                                    val toast =
-                                        Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
-                                    toast.show()
-                                }
-                        } else {
-                            Log.d(tag, "register fail")
+                                    }
 
-                            val text =
-                                "Invalid credentials! Please check all the fields can try again."
-                            val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
+                            } else {
+                                Toast.makeText(
+                                    this@signUp,
+                                    "Error Registering, Account may already exist",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                toggleUi(true)
+                            }
+                        }.addOnFailureListener { e ->
+                            Log.w(tag, "Error contacting Firebase", e)
+
+                            val text = "Error Registering"
+                            val toast =
+                                Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
                             toast.show()
+                            toggleUi(true)
                         }
-                    }
+                } else {
+                    Log.d(tag, "register fail")
+
+                    val text =
+                        "Invalid credentials! Please check all the fields can try again."
+                    val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
+                    toast.show()
+                    toggleUi(true)
+                }
             } else {
                 binding.emailInput.error = "Please enter a correct email format"
                 valid = false
+                toggleUi(true)
             }
         } else {
             binding.emailInput.error = "Please enter email"
             valid = false
+            toggleUi(true)
         }
     }
-}
 
+
+    private fun toggleUi(switch: Boolean) {
+        if (switch) {
+            Log.d("Toggle", "On")
+            binding.progressBar.visibility = View.GONE
+            binding.emailInput.isEnabled = true
+            binding.nameSignup.isEnabled = true
+            binding.passwordSignup.isEnabled = true
+            binding.createuserButton.isEnabled = true
+            binding.signupConstraint.foreground = null
+        } else {
+            Log.d("Toggle", "Off")
+            binding.progressBar.visibility = View.VISIBLE
+            binding.createuserButton.isEnabled = false
+            binding.emailInput.isEnabled = false
+            binding.nameSignup.isEnabled = false
+            binding.passwordSignup.isEnabled = false
+            binding.createuserButton.isEnabled = false
+            binding.signupConstraint.foreground = getDrawable(R.color.semi_transparent)
+        }
+
+    }
+
+}
