@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signUp">
-
+    tools:context=".EditProfile">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/signupConstraint"
+        android:id="@+id/editConstraint"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
-            app:layout_constraintBottom_toTopOf="@+id/emailInput"
-            app:layout_constraintStart_toStartOf="@+id/emailInput" />
+            android:text="Username"
+            app:layout_constraintBottom_toTopOf="@+id/username"
+            app:layout_constraintStart_toStartOf="@+id/username" />
 
         <EditText
-            android:id="@+id/emailInput"
+            android:id="@+id/username"
             android:layout_width="300dp"
             android:layout_height="34dp"
 
@@ -35,15 +36,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textViewName"
+            android:id="@+id/textViewName2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username"
-            app:layout_constraintBottom_toTopOf="@+id/nameSignup"
-            app:layout_constraintStart_toStartOf="@+id/nameSignup" />
+            android:text="Password"
+            app:layout_constraintBottom_toTopOf="@+id/passwordInput"
+            app:layout_constraintStart_toStartOf="@+id/passwordInput" />
 
         <EditText
-            android:id="@+id/nameSignup"
+            android:id="@+id/passwordInput"
             android:layout_width="300dp"
             android:layout_height="34dp"
             android:layout_marginTop="50dp"
@@ -53,18 +54,18 @@
             android:padding="5dip"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailInput" />
+            app:layout_constraintTop_toBottomOf="@+id/username" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password"
-            app:layout_constraintBottom_toTopOf="@+id/passwordSignup"
-            app:layout_constraintStart_toStartOf="@+id/passwordSignup" />
+            android:text="Repeat Password"
+            app:layout_constraintBottom_toTopOf="@+id/passwordRepeatInput"
+            app:layout_constraintStart_toStartOf="@+id/passwordRepeatInput" />
 
         <EditText
-            android:id="@+id/passwordSignup"
+            android:id="@+id/passwordRepeatInput"
             android:layout_width="300dp"
             android:layout_height="34dp"
             android:layout_marginTop="50dp"
@@ -75,19 +76,19 @@
             android:padding="5dip"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameSignup" />
+            app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
 
         <Button
-            android:id="@+id/createuserButton"
+            android:id="@+id/changeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:backgroundTint="@color/primary_white"
-            android:text="Signup"
+            android:text="Update"
             android:textColor="@color/primary_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordSignup"
+            app:layout_constraintTop_toBottomOf="@+id/passwordRepeatInput"
             app:strokeColor="@color/primary_black"
             app:strokeWidth="1dp" />
 
@@ -98,10 +99,6 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="342dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

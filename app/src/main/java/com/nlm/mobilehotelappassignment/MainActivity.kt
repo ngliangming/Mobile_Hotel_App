@@ -63,13 +63,14 @@ class MainActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(emailInput, passwordInput)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        if (FirebaseAuth.getInstance().currentUser?.isEmailVerified!!){
+                        if (FirebaseAuth.getInstance().currentUser?.isEmailVerified!!) {
                             login()
 
-                        }
-                        else{
-                            Toast.makeText(applicationContext, "Please verify your email address.",
-                                Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(
+                                applicationContext, "Please verify your email address.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             toggleUi(true)
                         }
 
@@ -86,14 +87,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.signupButton.setOnClickListener { signupButton() }
 
+        binding.forgotPasswordText.setOnClickListener { forgotPassword() }
     }
 
     private fun signupButton() {
-        val button = binding.signupButton
-        button.setOnClickListener {
-            val intent = Intent(this, signUp::class.java)
-            startActivity(intent)
-        }
+        val intent = Intent(this, signUp::class.java)
+        startActivity(intent)
     }
 
 
@@ -186,5 +185,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    private fun forgotPassword() {
+        val intent = Intent(this, ForgotPassword::class.java)
+        startActivity(intent)
+    }
 
 }

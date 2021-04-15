@@ -2,6 +2,7 @@ package com.nlm.mobilehotelappassignment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,11 +22,27 @@ class signUp : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        title = "Zenith Hotel - Signup"
+
         auth = FirebaseAuth.getInstance()
 
         binding.createuserButton.setOnClickListener { createUserBtn() }
 
         toggleUi(true)
+
+//        Enable action bar back button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    //    Assign back button function
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     //check for email pattern
@@ -82,7 +99,8 @@ class signUp : AppCompatActivity() {
                             if (it.isSuccessful) {
 
                                 //Add info to database
-                                db.collection("users").document(emailInput)
+                                db.collection("users")
+                                    .document(emailInput)
                                     .set(userProf)
                                     .addOnSuccessListener {
 

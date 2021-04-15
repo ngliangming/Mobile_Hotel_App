@@ -66,11 +66,10 @@ class customerHome : AppCompatActivity() {
         startActivity(intent)
     }
     private fun editProfile(){
-//        TODO add activity into Intent
-//        val intent = Intent(this, ???????::class.java)
-//            .putExtra("userId", userId)
-//
-//        startActivity(intent)
+        val intent = Intent(this, ViewRooms::class.java)
+            .putExtra("email", email)
+
+        startActivity(intent)
     }
 
     private fun logout() {
