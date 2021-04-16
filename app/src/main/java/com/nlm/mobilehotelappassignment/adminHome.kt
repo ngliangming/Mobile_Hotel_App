@@ -50,7 +50,10 @@ class adminHome : AppCompatActivity() {
     }
 
     private fun addAdmin() {
+        val intent = Intent(this, AddAdmin::class.java)
+            //.putExtra("email", email)
 
+        startActivity(intent)
     }
 
     private fun logout() {

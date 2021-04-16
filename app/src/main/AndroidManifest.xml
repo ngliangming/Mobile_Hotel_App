@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/zenith_hotels_blk"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileHotelAppAssignment">
-        <activity android:name=".checkoutDetails"></activity>
+        <activity android:name=".AddAdmin"></activity>
+        <activity android:name=".checkoutDetails" />
         <activity android:name=".EditProfile" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".checkinDetails" />
