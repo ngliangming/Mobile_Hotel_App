@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:background="@color/primary_black">
+
+    <TextView
+        android:id="@+id/roomTypeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/thin_border"
+        android:padding="10dp"
+        android:text="Room Type"
+        android:textAlignment="textEnd"
+        android:textColor="@color/primary_white"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/roomTypeAD"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/thin_border"
+        android:padding="10dp"
+        android:text="Room Type"
+        android:textColor="@color/primary_white"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@+id/checkinADBtn"
+        app:layout_constraintStart_toEndOf="@+id/roomTypeView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/roomNumberView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:background="@drawable/thin_border"
+        android:padding="10dp"
+        android:text="Room Number"
+        android:textColor="@color/primary_white"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roomTypeView" />
+
+    <TextView
+        android:id="@+id/roomNumberAD"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/thin_border"
+        android:padding="10dp"
+        android:text="Number"
+        android:textColor="@color/primary_white"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@+id/checkinADBtn"
+        app:layout_constraintStart_toEndOf="@+id/roomNumberView"
+        app:layout_constraintTop_toBottomOf="@+id/roomTypeAD" />
+
+
+    <TextView
+        android:id="@+id/clientNameAD"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/thin_border"
+        android:text="name"
+        android:textAlignment="textEnd"
+        android:textColor="@color/primary_white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@id/clientEmailAD"
+        app:layout_constraintEnd_toStartOf="@id/checkinADBtn"
+        app:layout_constraintTop_toBottomOf="@id/roomNumberAD" />
+
+    <TextView
+        android:id="@+id/clientEmailView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/thin_border"
+        android:padding="10dp"
+        android:text="Client"
+        android:textColor="@color/primary_white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/checkinADBtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/roomNumberView"
+        app:layout_constraintTop_toBottomOf="@+id/roomNumberView"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/clientEmailAD"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/thin_border"
+        android:padding="10dp"
+        android:text="email"
+        android:textColor="@color/primary_white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/checkinADBtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/clientEmailView" />
+
+    <Button
+        android:id="@+id/checkinADBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:text="Check in"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/roomTypeAD"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

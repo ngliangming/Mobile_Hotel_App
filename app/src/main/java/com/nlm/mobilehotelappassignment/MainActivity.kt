@@ -142,12 +142,12 @@ class MainActivity : AppCompatActivity() {
             toggleUi(true)
         } else {
             Log.d("Login", "admin")
-//            startForResult.launch(
-//                Intent(this, adminHome::class.java)
-//                    .putExtra("email", email)
-//                    .putExtra("name", username)
-//                    .putExtra("adminLevel", adminLevel)
-//            )
+            startForResult.launch(
+                Intent(this, adminHome::class.java)
+                    .putExtra("email", email)
+                    .putExtra("name", username)
+                    .putExtra("adminLevel", adminLevel)
+            )
             toggleUi(true)
         }
     }
