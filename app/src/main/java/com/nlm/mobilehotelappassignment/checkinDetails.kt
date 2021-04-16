@@ -17,11 +17,11 @@ import java.util.*
 
 
 class checkinDetails : AppCompatActivity() {
-    private val db = Firebase.firestore
+    val db = Firebase.firestore
     private lateinit var binding: ActivityCheckinDetailsBinding
     private val timestamp = TimestampConverter()
 
-    private lateinit var email: String
+    private lateinit var userEmail: String
     private lateinit var bookingId: String
     private var roomNumber: Int = -1
     private lateinit var roomStatus: String
@@ -49,7 +49,6 @@ class checkinDetails : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //Get binding
-        email = intent.getStringExtra("email").toString()
         bookingId = intent.getStringExtra("bookingId").toString()
         roomNumber = intent.getIntExtra("roomNumber", -1)
         roomStatus = intent.getStringExtra("roomStatus").toString()
@@ -58,61 +57,64 @@ class checkinDetails : AppCompatActivity() {
         sDate = intent.getStringExtra("startDate").toString()
         eDate = intent.getStringExtra("endDate").toString()
         roomImg = intent.getStringExtra("roomImg").toString()
-        username = intent.getStringExtra("username").toString()
-
-        //Change action bar title
-        title = "Room $roomNumber";
-
-        //Convert to Int
-        sDay = timestamp.toDay(sDate)
-        sMonth = timestamp.toMonth(sDate)
-        sYear = timestamp.toYear(sDate)
-
-        eDay = timestamp.toDay(eDate)
-        eMonth = timestamp.toMonth(eDate)
-        eYear = timestamp.toYear(eDate)
-
-        //Update UI info
-        //=----------------------------
-        val context: Context = binding.roomImg.context
-        val id: Int = context.resources
-            .getIdentifier(roomImg, "drawable", context.packageName)
-        binding.roomImg.setImageResource(id)
-
-        binding.username.text = username
-        binding.roomName.text = roomType
-        binding.roomPrice.text = roomPrice.toString()
-
-        binding.startDate.text = "$sDay/$sMonth/$sYear"
-        binding.endDate.text = "$eDay/$eMonth/$eYear"
-
-        val totalDays = timestamp.daysBetween(eDate, sDate)
-        binding.totalPrice.text = (totalDays * roomPrice).toString()
-
+        userEmail = intent.getStringExtra("userEmail").toString()
 
         db.collection("users")
-            .document(email)
+            .document(userEmail)
             .get()
-            .addOnSuccessListener { user ->
-                username = user.get("username").toString()
-                Log.d("Test", "this is the username $username")
-            }
+            .addOnSuccessListener { userData ->
+                if (userData.exists()) {
+                    username = userData.get("username").toString()
 
-        binding.adminCheckInBtn.setOnClickListener {
-            db.collection("booking").document(bookingId).update("status","Checked in")
-                .addOnSuccessListener { rooms ->
-                    Log.d("Success","Successfully checked in")
+                    Log.d("username","Username is $username")
 
-                    val text = "Room $roomNumber has successfully checked in"
-                    val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
-                    toast.show()
+                    //Change action bar title
+                    title = "Room $roomNumber"
 
-                    finish()
+                    //Convert to Int
+                    sDay = timestamp.toDay(sDate)
+                    sMonth = timestamp.toMonth(sDate)
+                    sYear = timestamp.toYear(sDate)
+
+                    eDay = timestamp.toDay(eDate)
+                    eMonth = timestamp.toMonth(eDate)
+                    eYear = timestamp.toYear(eDate)
+
+                    //Update UI info
+                    //=----------------------------
+                    val context: Context = binding.roomImg.context
+                    val id: Int = context.resources
+                        .getIdentifier(roomImg, "drawable", context.packageName)
+                    binding.roomImg.setImageResource(id)
+
+                    binding.username.text = username
+                    binding.roomName.text = roomType
+                    binding.roomPrice.text = roomPrice.toString()
+
+                    binding.startDate.text = "$sDay/$sMonth/$sYear"
+                    binding.endDate.text = "$eDay/$eMonth/$eYear"
+
+                    val totalDays = timestamp.daysBetween(eDate, sDate)
+                    binding.totalPrice.text = (totalDays * roomPrice).toString()
+
+                    binding.adminCheckInBtn.setOnClickListener {
+                        db.collection("booking").document(bookingId).update("status","Checked in")
+                            .addOnSuccessListener { rooms ->
+                                Log.d("Success","Successfully checked in")
+
+                                val text = "Room $roomNumber has successfully checked in"
+                                val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
+                                toast.show()
+
+                                finish()
+                            }
+                    }
                 }
-        }
+            }
+    }
 
-        //    Assign back button function
-        fun onOptionsItemSelected(item: MenuItem): Boolean {
+    //    Assign back button function
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.home -> {
                 finish()
@@ -122,5 +124,5 @@ class checkinDetails : AppCompatActivity() {
         }
     }
 
-    }
+
 }

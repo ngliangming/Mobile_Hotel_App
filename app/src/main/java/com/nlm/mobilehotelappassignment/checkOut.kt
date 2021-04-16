@@ -28,7 +28,7 @@ class checkOut : AppCompatActivity() {
         setContentView(binding.root)
 
         //Change action bar title
-        title = "Zenith Hotel - Check in";
+        title = "Zenith Hotel - Check out";
 
         //Enable action bar back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -103,7 +103,7 @@ class checkOut : AppCompatActivity() {
     //for adapter
     class ViewAdapter(
         val checkoutList: CheckOutList,
-        val passedFunc: (bookingId: String, roomNumber: Int, roomStatus: String, roomType: String, roomPrice: Int, startDate: String, endDate: String, roomImg: String) -> (Unit)
+        val passedFunc: (bookingId: String, roomNumber: Int, roomStatus: String, roomType: String, roomPrice: Int, startDate: String, endDate: String, roomImg: String, userEmail: String) -> (Unit)
     ) : RecyclerView.Adapter<adminCoViewHolder>() {
 
         //number of items (room)
@@ -144,7 +144,8 @@ class checkOut : AppCompatActivity() {
                     room.price,
                     room.startDate,
                     room.endDate,
-                    room.roomImg
+                    room.roomImg,
+                    room.userEmail
                 )
             }
         }
@@ -160,7 +161,8 @@ class checkOut : AppCompatActivity() {
         roomPrice: Int,
         startDate: String,
         endDate: String,
-        roomImg: String
+        roomImg: String,
+        userEmail: String
     ){
         val intent = Intent(this, checkoutDetails::class.java)
             .putExtra("bookingId", bookingId)
@@ -171,6 +173,7 @@ class checkOut : AppCompatActivity() {
             .putExtra("startDate", startDate)
             .putExtra("endDate", endDate)
             .putExtra("roomImg", roomImg)
+            .putExtra("userEmail",userEmail)
 
         startActivity(intent)
     }

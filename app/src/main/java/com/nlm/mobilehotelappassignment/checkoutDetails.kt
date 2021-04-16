@@ -18,7 +18,7 @@ class checkoutDetails : AppCompatActivity() {
     private lateinit var binding: ActivityCheckoutDetailsBinding
     private val timestamp = TimestampConverter()
 
-    private lateinit var email: String
+    private lateinit var userEmail: String
     private lateinit var bookingId: String
     private var roomNumber: Int = -1
     private lateinit var roomStatus: String
@@ -46,7 +46,6 @@ class checkoutDetails : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //Get binding
-        email = intent.getStringExtra("email").toString()
         bookingId = intent.getStringExtra("bookingId").toString()
         roomNumber = intent.getIntExtra("roomNumber", -1)
         roomStatus = intent.getStringExtra("roomStatus").toString()
@@ -56,48 +55,61 @@ class checkoutDetails : AppCompatActivity() {
         eDate = intent.getStringExtra("endDate").toString()
         roomImg = intent.getStringExtra("roomImg").toString()
         username = intent.getStringExtra("username").toString()
+        userEmail = intent.getStringExtra("userEmail").toString()
 
-        //Change action bar title
-        title = "Room $roomNumber";
+        db.collection("users")
+            .document(userEmail)
+            .get()
+            .addOnSuccessListener { userData ->
+                if (userData.exists()) {
+                    username = userData.get("username").toString()
 
-        //Convert to Int
-        sDay = timestamp.toDay(sDate)
-        sMonth = timestamp.toMonth(sDate)
-        sYear = timestamp.toYear(sDate)
+                    Log.d("username", "Username is $username")
 
-        eDay = timestamp.toDay(eDate)
-        eMonth = timestamp.toMonth(eDate)
-        eYear = timestamp.toYear(eDate)
+                    //Change action bar title
+                    title = "Room $roomNumber";
 
-        //Update UI info
-        //=----------------------------
-        val context: Context = binding.roomImg.context
-        val id: Int = context.resources
-            .getIdentifier(roomImg, "drawable", context.packageName)
-        binding.roomImg.setImageResource(id)
+                    //Convert to Int
+                    sDay = timestamp.toDay(sDate)
+                    sMonth = timestamp.toMonth(sDate)
+                    sYear = timestamp.toYear(sDate)
 
-        binding.username.text = username
-        binding.roomName.text = roomType
-        binding.roomPrice.text = roomPrice.toString()
+                    eDay = timestamp.toDay(eDate)
+                    eMonth = timestamp.toMonth(eDate)
+                    eYear = timestamp.toYear(eDate)
 
-        binding.startDate.text = "$sDay/$sMonth/$sYear"
-        binding.endDate.text = "$eDay/$eMonth/$eYear"
+                    //Update UI info
+                    //=----------------------------
+                    val context: Context = binding.roomImg.context
+                    val id: Int = context.resources
+                        .getIdentifier(roomImg, "drawable", context.packageName)
+                    binding.roomImg.setImageResource(id)
 
-        val totalDays = timestamp.daysBetween(eDate, sDate)
-        binding.totalPrice.text = (totalDays * roomPrice).toString()
+                    binding.username.text = username
+                    binding.roomName.text = roomType
+                    binding.roomPrice.text = roomPrice.toString()
 
-        binding.adminCheckOutBtn.setOnClickListener {
-            db.collection("booking").document(bookingId).update("status","Checked out")
-                .addOnSuccessListener { rooms ->
-                    Log.d("Success","Successfully checked in")
+                    binding.startDate.text = "$sDay/$sMonth/$sYear"
+                    binding.endDate.text = "$eDay/$eMonth/$eYear"
 
-                    val text = "Room $roomNumber has successfully checked out"
-                    val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
-                    toast.show()
+                    val totalDays = timestamp.daysBetween(eDate, sDate)
+                    binding.totalPrice.text = (totalDays * roomPrice).toString()
 
-                    finish()
+                    binding.adminCheckOutBtn.setOnClickListener {
+                        db.collection("booking").document(bookingId).update("status","Checked out")
+                            .addOnSuccessListener { rooms ->
+                                Log.d("Success","Successfully checked in")
+
+                                val text = "Room $roomNumber has successfully checked out"
+                                val toast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
+                                toast.show()
+
+                                finish()
+                            }
+                    }
+
                 }
-        }
+            }
 
     }
 

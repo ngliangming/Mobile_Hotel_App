@@ -33,7 +33,7 @@ class checkIn : AppCompatActivity() {
         //Enable action bar back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-//        userEmail = intent.getStringExtra("email").toString()
+        //userEmail = intent.getStringExtra("email").toString()
 
         initiateView()
     }
@@ -43,7 +43,8 @@ class checkIn : AppCompatActivity() {
         var roomList = CheckInList()
 
         //Populate List with rooms based on userEmail
-        db.collection("booking").whereEqualTo("status","pending")
+        db.collection("booking")
+            .whereEqualTo("status","pending")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -98,7 +99,7 @@ class checkIn : AppCompatActivity() {
     //for adapter
     class ViewAdapter(
         val checkinList: CheckInList,
-        val passedFunc: (bookingId: String, roomNumber: Int, roomStatus: String, roomType: String, roomPrice: Int, startDate: String, endDate: String, roomImg: String) -> (Unit)
+        val passedFunc: (bookingId: String, roomNumber: Int, roomStatus: String, roomType: String, roomPrice: Int, startDate: String, endDate: String, roomImg: String, userEmail: String) -> (Unit)
     ) : RecyclerView.Adapter<adminViewHolder>() {
 
         //number of items (room)
@@ -139,7 +140,8 @@ class checkIn : AppCompatActivity() {
                     room.price,
                     room.startDate,
                     room.endDate,
-                    room.roomImg
+                    room.roomImg,
+                    room.userEmail
                 )
             }
         }
@@ -158,7 +160,8 @@ class checkIn : AppCompatActivity() {
         roomPrice: Int,
         startDate: String,
         endDate: String,
-        roomImg: String
+        roomImg: String,
+        userEmail: String
     ){
         val intent = Intent(this, checkinDetails::class.java)
             .putExtra("bookingId", bookingId)
@@ -169,6 +172,7 @@ class checkIn : AppCompatActivity() {
             .putExtra("startDate", startDate)
             .putExtra("endDate", endDate)
             .putExtra("roomImg", roomImg)
+            .putExtra("userEmail",userEmail)
 
             startActivity(intent)
     }
@@ -180,7 +184,6 @@ class checkIn : AppCompatActivity() {
     }
 
     class Room(
-        val userEmail: String,
         val bookingId: String,
         val roomNumber: Int,
         val roomStatus: String,
@@ -189,6 +192,7 @@ class checkIn : AppCompatActivity() {
         val startDate: String,
         val endDate: String,
         val roomImg: String,
+        val userEmail: String,
     )
 
     //    Assign back button function
