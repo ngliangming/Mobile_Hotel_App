@@ -1,7 +1,12 @@
 package com.nlm.mobilehotelappassignment
 
+import android.R.attr.data
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.nlm.mobilehotelappassignment.databinding.ActivityCustomerHomeBinding
@@ -65,12 +70,28 @@ class customerHome : AppCompatActivity() {
 
         startActivity(intent)
     }
-    private fun editProfile(){
-        val intent = Intent(this, ViewRooms::class.java)
-            .putExtra("email", email)
 
-        startActivity(intent)
+    private fun editProfile() {
+        startForResult.launch(
+            Intent(this, EditProfile::class.java)
+                .putExtra("name", name)
+                .putExtra("email", email)
+        )
     }
+
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                logout()
+            }
+
+            val data: Intent? = result.data
+            name = data?.getStringExtra("name").toString()
+            if (name != "") {
+                val welcomeText = "Welcome back, $name"
+                binding.welcomeTxt.text = welcomeText
+            }
+        }
 
     private fun logout() {
         auth.signOut()
