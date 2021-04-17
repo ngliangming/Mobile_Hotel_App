@@ -26,7 +26,7 @@ class adminHome : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         name = intent.getStringExtra("name").toString()
-        adminLevel = intent.getStringExtra("adminLevel").toString().toInt()
+        adminLevel = intent.getIntExtra("adminLevel",-1)
 
         val user = auth.currentUser
         email = user?.email.toString()
