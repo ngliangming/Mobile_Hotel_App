@@ -123,9 +123,9 @@ class checkOut : AppCompatActivity() {
             val room = checkoutList.rooms.get(position)
 
             //Get UI controller
-            val roomTypeView = holder.view.findViewById<TextView>(R.id.roomTypeCo)
-            val roomNumber = holder.view.findViewById<TextView>(R.id.roomNumberCo)
-            val clientEmailView = holder.view.findViewById<TextView>(R.id.clientEmailCo)
+            val roomTypeView = holder.view.findViewById<TextView>(R.id.roomTypeAD)
+            val roomNumber = holder.view.findViewById<TextView>(R.id.roomNumberAD)
+            val clientEmailView = holder.view.findViewById<TextView>(R.id.clientEmailAD)
             val checkoutCoBtn = holder.view.findViewById<TextView>(R.id.checkoutCoBtn)
 
             //Change UI display

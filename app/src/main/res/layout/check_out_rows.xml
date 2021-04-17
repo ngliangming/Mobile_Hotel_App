@@ -2,113 +2,111 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="2dp"
     android:background="@color/primary_black">
+
 
     <TextView
         android:id="@+id/roomTypeView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/thin_border"
         android:padding="10dp"
         android:text="Room Type"
         android:textAlignment="textEnd"
         android:textColor="@color/primary_white"
         android:textSize="22sp"
-        app:layout_constraintEnd_toStartOf="@+id/roomTypeCo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
-        android:id="@+id/roomTypeCo"
-        android:layout_width="wrap_content"
+        android:id="@+id/roomTypeAD"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/thin_border"
         android:padding="10dp"
         android:text="Room Type"
         android:textColor="@color/primary_white"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/roomNumberView"
-        app:layout_constraintEnd_toStartOf="@+id/checkoutCoBtn"
+        app:layout_constraintBottom_toTopOf="@+id/roomNumberAD"
+        app:layout_constraintEnd_toEndOf="@+id/roomNumberAD"
         app:layout_constraintStart_toEndOf="@+id/roomTypeView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/roomNumberView"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:background="@drawable/thin_border"
         android:padding="10dp"
         android:text="Room Number"
         android:textColor="@color/primary_white"
         android:textSize="22sp"
-        app:layout_constraintEnd_toStartOf="@+id/roomNumberCo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/roomTypeView" />
 
+
     <TextView
-        android:id="@+id/roomNumberCo"
-        android:layout_width="wrap_content"
+        android:id="@+id/roomNumberAD"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/thin_border"
         android:padding="10dp"
         android:text="Number"
         android:textColor="@color/primary_white"
         android:textSize="22sp"
-        app:layout_constraintEnd_toStartOf="@+id/checkoutCoBtn"
-        app:layout_constraintStart_toEndOf="@+id/roomNumberView"
-        app:layout_constraintTop_toBottomOf="@+id/roomTypeCo" />
+        app:layout_constraintBottom_toTopOf="@+id/clientEmailAD"
+        app:layout_constraintStart_toEndOf="@+id/roomNumberView" />
 
     <TextView
         android:id="@+id/clientEmailView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginBottom="2dp"
         android:background="@drawable/thin_border"
         android:padding="10dp"
         android:text="Client"
         android:textColor="@color/primary_white"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/clientEmailCo"
-        app:layout_constraintStart_toStartOf="@id/roomNumberView"
-        app:layout_constraintTop_toBottomOf="@+id/roomNumberView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roomNumberView" />
 
     <TextView
-        android:id="@+id/clientEmailCo"
+        android:id="@+id/clientEmailAD"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
+        android:layout_marginBottom="2dp"
         android:background="@drawable/thin_border"
         android:padding="10dp"
         android:text="email"
         android:textColor="@color/primary_white"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/roomNumberAD"
         app:layout_constraintStart_toEndOf="@+id/clientEmailView"
         app:layout_constraintTop_toBottomOf="@+id/roomNumberView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/checkoutCoBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="Check out"
         android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/roomNumberCo"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/roomNumberAD"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
