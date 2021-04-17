@@ -43,8 +43,9 @@ class checkOut : AppCompatActivity() {
         var roomList = CheckOutList()
 
         //Populate List with rooms based on userEmail
-
-        db.collection("booking").whereEqualTo("status","Checked in")
+        db.collection("booking")
+            .whereEqualTo("status", "Checked in")
+            .orderBy("endDate", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -163,7 +164,7 @@ class checkOut : AppCompatActivity() {
         endDate: String,
         roomImg: String,
         userEmail: String
-    ){
+    ) {
         val intent = Intent(this, checkoutDetails::class.java)
             .putExtra("bookingId", bookingId)
             .putExtra("roomNumber", roomNumber)
@@ -173,7 +174,7 @@ class checkOut : AppCompatActivity() {
             .putExtra("startDate", startDate)
             .putExtra("endDate", endDate)
             .putExtra("roomImg", roomImg)
-            .putExtra("userEmail",userEmail)
+            .putExtra("userEmail", userEmail)
 
         startActivity(intent)
     }

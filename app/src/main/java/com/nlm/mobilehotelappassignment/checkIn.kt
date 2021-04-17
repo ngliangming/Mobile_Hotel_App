@@ -45,6 +45,7 @@ class checkIn : AppCompatActivity() {
         //Populate List with rooms based on userEmail
         db.collection("booking")
             .whereEqualTo("status","pending")
+            .orderBy("startDate", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
