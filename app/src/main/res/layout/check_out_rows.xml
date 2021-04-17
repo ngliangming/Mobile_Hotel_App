@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
+    android:layout_marginTop="25dp"
     android:background="@color/primary_black">
 
 
@@ -99,6 +99,10 @@
         android:id="@+id/checkoutCoBtn"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/thin_border"
         android:text="Check out"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"

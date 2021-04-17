@@ -85,7 +85,7 @@
         android:layout_marginBottom="2dp"
         android:background="@drawable/thin_border"
         android:padding="10dp"
-        android:text="Room Type"
+        android:text="101"
         android:textAlignment="textEnd"
         android:textColor="@color/primary_white"
         android:textSize="22sp"

@@ -76,26 +76,27 @@ class ViewRooms : AppCompatActivity() {
 
                     var img: String = ""
 
-                    //TODO Add code to determine image
                     when (type) {
                         "Single" -> img = "single_room"
                         "Double" -> img = "double_room"
                         "Suite" -> img = "suite_room"
                     }
 
-                    roomList.add(
-                        Room(
-                            userEmail,
-                            bookingId,
-                            roomNumber,
-                            roomStatus,
-                            type,
-                            price,
-                            startDate,
-                            endDate,
-                            img
+                    if (roomStatus != "Checked out") {
+                        roomList.add(
+                            Room(
+                                userEmail,
+                                bookingId,
+                                roomNumber,
+                                roomStatus,
+                                type,
+                                price,
+                                startDate,
+                                endDate,
+                                img
+                            )
                         )
-                    )
+                    }
                 }
 
                 binding.recyclerViewRoomType.layoutManager = LinearLayoutManager(this)
